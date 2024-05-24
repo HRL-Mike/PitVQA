@@ -10,7 +10,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 class PitVQANet(nn.Module):  # modify GPT layer, GPT tokenizer
     def __init__(self,
-                 med_config='/home/mobislam/experiments/PitVQANet-2/BLIP/configs/med_config.json',
+                 med_config='/home/mobislam/experiments/PitVQANet/BLIP/configs/med_config.json',  # 得用绝对路径
                  num_class=59,
                  image_size=224,
                  vit='base',
@@ -30,12 +30,7 @@ class PitVQANet(nn.Module):  # modify GPT layer, GPT tokenizer
         encoder_config = BertConfig.from_json_file(med_config)
         encoder_config.vocab_size = self.tokenizer.vocab_size  # 30524 --> 50257
         encoder_config.encoder_width = vision_width
-        # load weights
-        pretrained_model = BertModel.from_pretrained('bert-base-uncased', config=encoder_config,
-                                                     ignore_mismatched_sizes=True)
-        # copy weights
         self.text_encoder = BertModel(config=encoder_config, add_pooling_layer=False)
-        self.text_encoder.load_state_dict(pretrained_model.state_dict(), strict=False)
 
         # decoder
         # change from BertLMHeadModel to GPT2Model
