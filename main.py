@@ -10,7 +10,7 @@ from torch import nn
 from utils import save_clf_checkpoint, adjust_learning_rate, calc_acc, calc_precision_recall_fscore
 from torch.utils.data import DataLoader
 
-from dataloader import EndoVis18VQAClassification, Pit24VQAClassification
+from dataloader import EndoVis18VQAGPTClassification, Pit24VQAClassification
 from model import PitVQANet
 
 import warnings
@@ -139,9 +139,9 @@ if __name__ == '__main__':
         folder_tail = '/vqa/Classification/*.txt'
 
         # dataloader
-        train_dataset = EndoVis18VQAClassification(train_seq, folder_head, folder_tail)
+        train_dataset = EndoVis18VQAGPTClassification(train_seq, folder_head, folder_tail)
         train_dataloader = DataLoader(dataset=train_dataset, batch_size=args.batch_size, shuffle=True, num_workers=8)
-        val_dataset = EndoVis18VQAClassification(val_seq, folder_head, folder_tail)
+        val_dataset = EndoVis18VQAGPTClassification(val_seq, folder_head, folder_tail)
         val_dataloader = DataLoader(dataset=val_dataset, batch_size=args.batch_size, shuffle=False, num_workers=8)
 
     elif args.dataset == 'pit24':
