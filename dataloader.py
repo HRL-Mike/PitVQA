@@ -8,7 +8,7 @@ from pathlib import Path
 from torchvision.transforms.functional import InterpolationMode
 
 
-class EndoVis18VQAClassification(Dataset):
+class EndoVis18VQAGPTClassification(Dataset):
     def __init__(self, seq, folder_head, folder_tail, transform=None):
         # define transform
         if transform is None:
